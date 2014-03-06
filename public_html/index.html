@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Puhpi</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+        <script>
+            var key;
+            var colors = ['red', 'green', 'blue', 'orange', 'yellow', 'black', 'white', 'AliceBlue', 'grey', 'pink', 'red',
+                'Bisque', 'chocolate', 'cyan', 'greenyellow', 'khaki', 'magenta', 'MediumAquaMarine', 'steelblue', 'weat', 'tomatoe', 'turquoise'];
+            var min = 0;
+            var max = colors.length;
+
+
+            $(document).ready(function() {
+
+                $('html').keydown(function(e) {
+                    //alert("I love u");
+                    //console.log("again.");
+                    $('#display').text(String.fromCharCode(e.which));
+                    key = String.fromCharCode(e.which);
+                    if (compareKeys())
+                    {
+                    }//returned boolean
+                });
+
+                function compareKeys()
+                {
+                    //alert("hi");
+                    var divs = document.getElementsByTagName("div");
+                    document.getElementById('key4').innerHTML = key;
+                    for (var i = 0; i < divs.length - 1; i++)
+                    {
+
+                        var comparable = (divs[i]).innerHTML;
+                        //alert(comparable);
+                        if (comparable === key)
+                        {
+                            //alert("Take a hit");
+                            document.getElementById('key4').style.backgroundColor = 'green';
+                            divs[i].style.backgroundColor = 'green';
+
+                            return true;
+                        }
+
+
+
+
+
+                    }
+
+                    document.getElementById('key4').style.backgroundColor = 'orange';
+
+                    return false;
+                }
+
+
+
+
+            });
+
+            var auto;
+            function changeBackgroundColor()
+            {
+
+                document.getElementById('id1').play();
+                auto = setTimeout(changeBackgroundColor, 10);
+                document.body.style.background = getRandomColor();
+
+
+
+            }
+
+            function stopBackground()
+            {
+                document.getElementById('id1').pause();
+                clearTimeout(auto);
+                document.body.style.background = 'white';
+
+            }
+
+            function getRandomColor()
+            {
+                // and the formula is:
+                var random = Math.floor(Math.random() * (max - min + 1)) + min;
+                //console.log("Reached");
+                return colors[random];
+            }
+        </script>
+    </head>
+    <body id="body">
+        <div id="key1" style="position:absolute; left: 200px; top: 100px; text-align: center; width: 100px; background-color: blue; font-size: 2em; color: black">A</div>
+        <div id="key2" style="position:absolute; left: 300px; top: 200px; text-align: center; width: 100px; background-color: blue; font-size: 2em; color: black">B</div>
+        <div id="key3" style="position:absolute; left: 444px; top: 33px; text-align: center; width: 100px; background-color: blue; font-size: 2em; color: black">E</div>
+        <div id="key4" style="position:absolute; left: 500px; top: 500px; text-align: center; width: 100px; background-color: white; font-size: 2em; color: black"></div>
+
+        <audio id="id1" src="id1.mp3"></audio>
+        <input type="button" value="ENABLE AUTOMATIC MODE" onclick="changeBackgroundColor();" >
+        <input type="button" value="DISABLE AUTOMATIC MODE" onclick="stopBackground();" >
+
+    </body>
+</html>
