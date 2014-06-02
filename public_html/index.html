@@ -9,7 +9,7 @@ and open the template in the editor.
         <title>Puhpi</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="jquery-1.8.3.min.js"></script>
 
         <script>
             var key;
@@ -17,7 +17,7 @@ and open the template in the editor.
                 'Bisque', 'chocolate', 'cyan', 'greenyellow', 'khaki', 'magenta', 'MediumAquaMarine', 'steelblue', 'weat', 'tomatoe', 'turquoise'];
             var min = 0;
             var max = colors.length;
-
+            var score = 0;
 
             $(document).ready(function() {
 
@@ -35,33 +35,147 @@ and open the template in the editor.
                 {
                     //alert("hi");
                     var divs = document.getElementsByTagName("div");
+                    var playerScore = document.getElementById("score");
                     document.getElementById('key4').innerHTML = key;
                     for (var i = 0; i < divs.length - 1; i++)
                     {
 
                         var comparable = (divs[i]).innerHTML;
+                        var num = 0;
+
                         //alert(comparable);
                         if (comparable === key)
                         {
                             //alert("Take a hit");
                             document.getElementById('key4').style.backgroundColor = 'green';
                             divs[i].style.backgroundColor = 'green';
+                            changeIt(divs[i]);
 
+                            score = increaseScore();
+                            playerScore.innerHTML = score;
                             return true;
                         }
-
-
-
-
-
                     }
 
                     document.getElementById('key4').style.backgroundColor = 'orange';
 
                     return false;
                 }
+                function increaseScore()
+                {
+                    score = score + 10;
+                    return score;
+                }
+                function decreaseScore()
+                {
+                    score = score - 10;
+                    return score;
+                }
+                function changeIt(currentDiv)
+                {
+                    //currentDiv.style.left = getRandomLeft();
+                    //currentDiv.style.top = getRandomTop();
+
+                    currentDiv.style.left = getRandomLocationWidth() + "px";
+                    currentDiv.style.top = getRandomLocationHeight() + "px";
+
+                    currentDiv.innerHTML = getRandomLetter();
+                    currentDiv.style.backgroundColor = 'blue';
+                }
 
 
+                function getRandomLocationWidth()
+                {
+                    var divHeight = document.getElementById('frame').clientHeight;
+                    var divWidth = document.getElementById('frame').clientWidth;
+
+                    var min = 0;
+                    var random = Math.floor(Math.random() * (divWidth - min + 1)) + min;
+
+                    return random;
+
+                }
+
+                function getRandomLocationHeight()
+                {
+                    var divHeight = document.getElementById('frame').clientHeight;
+                    var divWidth = document.getElementById('frame').clientWidth;
+
+                    var min = 0;
+                    var random = Math.floor(Math.random() * (divHeight - min + 1)) + min;
+                    //alert(random);
+
+                    return random;
+
+                }
+
+                function getRandomLeft()
+                {
+                    var left = [
+                        '100px', '200px',
+                        '50px', '30px'
+
+                    ];
+                    var min = 0;
+                    var max = left.length;
+                    // and the formula is:
+                    var random = Math.floor(Math.random() * (max - min + 1)) + min;
+                    //console.log("Reached");
+                    return left[random];
+                }
+
+                function getRandomTop()
+                {
+                    var left = [
+                        '500px', '900px',
+                        '5px', '10px'
+
+                    ];
+                    var min = 0;
+                    var max = left.length;
+                    // and the formula is:
+                    var random = Math.floor(Math.random() * (max - min + 1)) + min;
+                    //console.log("Reached");
+                    return left[random];
+                }
+
+                function getRandomLetter()
+                {
+                    var letters = [
+                        'A',
+                        'B',
+                        'C',
+                        'D',
+                        'E',
+                        'F',
+                        'G',
+                        'H',
+                        'I',
+                        'J',
+                        'K',
+                        'L',
+                        'M',
+                        'N',
+                        'O',
+                        'P',
+                        'Q',
+                        'R',
+                        'S',
+                        'T',
+                        'U',
+                        'V',
+                        'W',
+                        'X',
+                        'Y',
+                        'Z'
+                    ];
+                    var min = 0;
+                    var max = letters.length;
+                    // and the formula is:
+                    var random = Math.floor(Math.random() * (max - min + 1)) + min;
+                    //console.log("Reached");
+                    return letters[random];
+                }
 
 
             });
@@ -71,7 +185,7 @@ and open the template in the editor.
             {
 
                 document.getElementById('id1').play();
-                auto = setTimeout(changeBackgroundColor, 10);
+                auto = setTimeout(changeBackgroundColor, 1);
                 document.body.style.background = getRandomColor();
 
 
@@ -93,17 +207,24 @@ and open the template in the editor.
                 //console.log("Reached");
                 return colors[random];
             }
+
+
         </script>
     </head>
     <body id="body">
-        <div id="key1" style="position:absolute; left: 200px; top: 100px; text-align: center; width: 100px; background-color: blue; font-size: 2em; color: black">A</div>
-        <div id="key2" style="position:absolute; left: 300px; top: 200px; text-align: center; width: 100px; background-color: blue; font-size: 2em; color: black">B</div>
-        <div id="key3" style="position:absolute; left: 444px; top: 33px; text-align: center; width: 100px; background-color: blue; font-size: 2em; color: black">E</div>
-        <div id="key4" style="position:absolute; left: 500px; top: 500px; text-align: center; width: 100px; background-color: white; font-size: 2em; color: black"></div>
-
         <audio id="id1" src="id1.mp3"></audio>
-        <input type="button" value="ENABLE AUTOMATIC MODE" onclick="changeBackgroundColor();" >
-        <input type="button" value="DISABLE AUTOMATIC MODE" onclick="stopBackground();" >
+        <input style="position:relative;" type="button" value="ENABLE AUTOMATIC MODE" onclick="changeBackgroundColor();" >
+        <input style="position:relative;" type="button" value="DISABLE AUTOMATIC MODE" onclick="stopBackground();" >
+
+
+        <div id="frame" style="background-color: white; padding: 10px 10px 10px 10px; border: 50px solid black; width: 1000px; height: 300px; margin: 30px auto">
+            <div id="key1" style="position:relative; left: 200px; top: 100px; text-align: center; width: 100px; background-color: blue; font-size: 2em; color: black">A</div>
+            <div id="key2" style="position:relative; left: 300px; top: 200px; text-align: center; width: 100px; background-color: blue; font-size: 2em; color: black">B</div>
+            <div id="key3" style="position:relative; left: 444px; top: 33px; text-align: center; width: 100px; background-color: blue; font-size: 2em; color: black">E</div>
+            <div id="score" style="position:relative; left: 900px; top: 250px; text-align: center; width: 100px; background-color: red; font-size: 2em; color: black">0</div>
+            <div id="key4" style="position:relative; left: 400px; top: -200px; text-align: center; width: 100px; background-color: white; font-size: 2em; color: black;"></div>
+
+        </div>
 
     </body>
 </html>
